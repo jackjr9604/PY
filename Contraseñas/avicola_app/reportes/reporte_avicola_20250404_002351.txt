@@ -1,0 +1,18 @@
+==================================================
+REPORTE AVÍCOLA - 20250404 002351
+==================================================
+
+[RESUMEN GENERAL]
+Hembras: 76
+Machos: 33
+Total aves: 109
+Total corrales: 7
+
+[DETALLE POR CORRAL]
+Módulo: 1, Lote: F611, Caseta: A, Corral: 1, Hembras: 50, Machos: 5, Total: 55
+Módulo: 1, Lote: F611, Caseta: A, Corral: 2, Hembras: 21, Machos: 20, Total: 41
+Módulo: 1, Lote: F611, Caseta: B, Corral: 1, Hembras: 0, Machos: 0, Total: 0
+Módulo: 1, Lote: F611, Caseta: B, Corral: 2, Hembras: 0, Machos: 5, Total: 5
+Módulo: 1, Lote: F611, Caseta: B, Corral: 3, Hembras: 2, Machos: 3, Total: 5
+Módulo: 1, Lote: F611, Caseta: B, Corral: 4, Hembras: 3, Machos: 0, Total: 3
+Módulo: 1, Lote: F611, Caseta: B, Corral: 5, Hembras: 0, Machos: 0, Total: 0

@@ -1,0 +1,42 @@
+{
+    "2": {
+        "F611": {
+            "B": [
+                {
+                    "nombre": "1",
+                    "hembras": 2,
+                    "machos": 50
+                },
+                {
+                    "nombre": "2",
+                    "hembras": 0,
+                    "machos": 0
+                },
+                {
+                    "nombre": "3",
+                    "hembras": 0,
+                    "machos": 0
+                },
+                {
+                    "nombre": "4",
+                    "hembras": 0,
+                    "machos": 0
+                },
+                {
+                    "nombre": "5",
+                    "hembras": 0,
+                    "machos": 0
+                },
+                {
+                    "nombre": "6",
+                    "hembras": 0,
+                    "machos": 0
+                }
+            ]
+        },
+        "M612": {
+            "A": []
+        }
+    },
+    "1": {}
+}
