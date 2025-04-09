@@ -111,23 +111,44 @@ class ReportTab:
         total_machos = 0
         total_corrales = 0
         
-        # Recorrer la estructura de datos
+        # Recorrer la estructura de datos de forma segura
         for modulo, lotes in self.data_manager.modules.items():
-            for lote, casetas in lotes.items():
+            for lote, lote_data in lotes.items():
+                # Verificar estructura del lote
+                casetas = lote_data.get('casetas', {}) if isinstance(lote_data, dict) else {}
+                
                 for caseta, corrales in casetas.items():
-                    for corral in corrales:
-                        hembras = corral.get("hembras", 0)
-                        machos = corral.get("machos", 0)
-                        total = hembras + machos
-                        
-                        self.tree.insert("", "end", values=(
-                            modulo, lote, caseta, corral["nombre"],
-                            hembras, machos, total
-                        ))
-                        
-                        total_hembras += hembras
-                        total_machos += machos
-                        total_corrales += 1
+                    # Asegurarnos que corrales es una lista
+                    corrales_list = corrales if isinstance(corrales, list) else []
+                    
+                    for corral in corrales_list:
+                        try:
+                            # Manejar tanto diccionarios como strings (para compatibilidad)
+                            if isinstance(corral, dict):
+                                nombre = corral.get("nombre", "Desconocido")
+                                hembras = corral.get("hembras", 0)
+                                machos = corral.get("machos", 0)
+                            else:
+                                # Si corral es string (estructura antigua)
+                                nombre = str(corral)
+                                hembras = 0
+                                machos = 0
+                            
+                            total = hembras + machos
+                            
+                            self.tree.insert("", "end", values=(
+                                modulo, lote, caseta, nombre,
+                                hembras, machos, total
+                            ))
+                            
+                            total_hembras += hembras
+                            total_machos += machos
+                            total_corrales += 1
+                            
+                        except Exception as e:
+                            print(f"Error procesando corral: {corral}. Error: {str(e)}")
+                            continue
+    
         
         # Actualizar resumen
         self.summary_vars["total_hembras"].set(str(total_hembras))
