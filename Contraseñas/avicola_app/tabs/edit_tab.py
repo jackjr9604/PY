@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from typing import Optional, List, Dict, Any, Union
 from datetime import datetime
+import time 
 
 
 class EditTab:
@@ -457,14 +458,14 @@ class EditTab:
         self._expand_new_item(name)
 
     def add_lote(self):
-        """Añade un nuevo lote al módulo seleccionado"""
+        """Añade un nuevo lote al módulo seleccionado con validación estricta de fecha"""
         selected = self._validate_selection()
         if not selected:
             return
 
         module_name = self.tree.item(selected, "text")
         
-        # Pedir nombre del lote
+        # 1. Pedir nombre del lote (sin cambios)
         name = self._get_user_input(
             "Nuevo Lote", 
             f"Nombre del lote para {module_name}:"
@@ -476,21 +477,79 @@ class EditTab:
             self._show_error(f"El lote '{name}' ya existe en este módulo")
             return
 
-        # Pedir fecha de alojamiento
-        fecha = self._get_user_input(
-            "Fecha de Alojamiento", 
-            f"Ingrese la fecha de alojamiento para {name} (DD/MM/AAAA):"
-        )
-        if not fecha:
-            return
+        # 2. Crear diálogo especial para la fecha
+        dialog = tk.Toplevel(self.frame)
+        dialog.title("Fecha de Alojamiento")
+        dialog.transient(self.frame)
+        dialog.grab_set()
+        self._center_window(dialog, 400, 180)
 
-        # Crear el lote con estructura consistente
+        ttk.Label(dialog, text=f"Ingrese la fecha de alojamiento para {name} (DD/MM/AAAA):").pack(padx=10, pady=10)
+
+        # Variable para almacenar la fecha
+        fecha_valida = tk.StringVar()
+
+        # Frame para los campos de fecha
+        date_frame = ttk.Frame(dialog)
+        date_frame.pack(padx=10, pady=5)
+
+        # Campos separados para día, mes y año
+        ttk.Label(date_frame, text="Día:").grid(row=0, column=0, padx=2)
+        day_entry = ttk.Spinbox(date_frame, from_=1, to=31, width=3, format="%02.0f")
+        day_entry.grid(row=0, column=1, padx=2)
+
+        ttk.Label(date_frame, text="Mes:").grid(row=0, column=2, padx=2)
+        month_entry = ttk.Spinbox(date_frame, from_=1, to=12, width=3, format="%02.0f")
+        month_entry.grid(row=0, column=3, padx=2)
+
+        ttk.Label(date_frame, text="Año:").grid(row=0, column=4, padx=2)
+        year_entry = ttk.Spinbox(date_frame, from_=2000, to=2100, width=5)
+        year_entry.grid(row=0, column=5, padx=2)
+
+        # Establecer fecha actual por defecto
+        hoy = datetime.now()
+        day_entry.set(hoy.day)
+        month_entry.set(hoy.month)
+        year_entry.set(hoy.year)
+
+        result = []
+
+        def on_ok():
+            try:
+                # Construir la fecha desde los componentes
+                dia = int(day_entry.get())
+                mes = int(month_entry.get())
+                año = int(year_entry.get())
+                
+                # Validar la fecha (esto lanzará ValueError si es inválida)
+                datetime.strptime(f"{dia:02d}/{mes:02d}/{año:04d}", "%d/%m/%Y")
+                
+                # Formatear la fecha como DD/MM/AAAA
+                fecha_formateada = f"{dia:02d}/{mes:02d}/{año:04d}"
+                result.append(fecha_formateada)
+                dialog.destroy()
+            except ValueError as e:
+                self._show_error(f"Fecha inválida: {str(e)}", dialog)
+
+        btn_frame = ttk.Frame(dialog)
+        btn_frame.pack(pady=10)
+        
+        ttk.Button(btn_frame, text="Aceptar", command=on_ok).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="Cancelar", command=dialog.destroy).pack(side=tk.LEFT, padx=5)
+
+        dialog.bind("<Return>", lambda e: on_ok())
+        dialog.wait_window()
+
+        if not result:
+            return None
+
+        # 3. Crear el lote con la fecha validada
         self.data_manager.modules[module_name][name] = {
             '_info': {
-                'fecha_alojamiento': fecha,
+                'fecha_alojamiento': result[0],
                 'fecha_creacion': datetime.now().strftime("%d/%m/%Y")
             },
-            'casetas': {}  # Diccionario para las casetas
+            'casetas': {}
         }
         
         self._save_and_refresh()
@@ -498,45 +557,113 @@ class EditTab:
 
     #Método para Editar la Fecha       
     def editar_fecha_lote(self):
-        """permitir editar la fecha de alojamiento de un lote seleccionado"""
+        """Permite editar la fecha de alojamiento de un lote seleccionado con validación"""
         selected = self.tree.focus()
         if not selected:
-            self._show_warning("seleccione un lote primero")
+            self._show_warning("Seleccione un lote primero")
             return
         
-        #verificar que el item deleccionado es un lote
+        # Verificar que el item seleccionado es un lote
         tags = self.tree.item(selected, "tags")
         if "lote" not in tags:
             self._show_warning("Por favor seleccione un lote")
             return
         
-        #obtener la estructura completa
+        # Obtener la estructura completa
         module_item = self.tree.parent(selected)
         module_name = self.tree.item(module_item, "text")
         lote_name = self.tree.item(selected, "text")
         
-        #obtener datos del lote con estructura segura
+        # Obtener datos del lote con estructura segura
         lote_data = self.data_manager.modules[module_name][lote_name]
-
-        #verificar y crear la estructura '_info' si no existe
         
+        # Verificar y crear la estructura '_info' si no existe
         if '_info' not in lote_data:
             lote_data['_info'] = {}
-            
-        #obtener la fecha actual con un valor por defecteco
+        
+        # Obtener la fecha actual con valor por defecto
         fecha_actual = lote_data['_info'].get('fecha_alojamiento', 'Sin fecha')
         
-        #Pedir la nueva fecha
-        nueva_fecha = self._get_user_input(
-            "editar Fecha de Alojamiento",
-            f"Ingrese la nueva fecha para el lote {lote_name} (DD/MM/AAA):",
-            default=fecha_actual
-        )
+        # Crear diálogo para editar fecha (igual que en add_lote)
+        dialog = tk.Toplevel(self.frame)
+        dialog.title("Editar Fecha de Alojamiento")
+        dialog.transient(self.frame)
+        dialog.grab_set()
+        self._center_window(dialog, 400, 180)
+
+        ttk.Label(dialog, text=f"Ingrese la nueva fecha para {lote_name} (DD/MM/AAAA):").pack(padx=10, pady=10)
+
+        # Frame para los campos de fecha
+        date_frame = ttk.Frame(dialog)
+        date_frame.pack(padx=10, pady=5)
+
+        # Campos separados para día, mes y año
+        ttk.Label(date_frame, text="Día:").grid(row=0, column=0, padx=2)
+        day_entry = ttk.Spinbox(date_frame, from_=1, to=31, width=3, format="%02.0f")
+        day_entry.grid(row=0, column=1, padx=2)
+
+        ttk.Label(date_frame, text="Mes:").grid(row=0, column=2, padx=2)
+        month_entry = ttk.Spinbox(date_frame, from_=1, to=12, width=3, format="%02.0f")
+        month_entry.grid(row=0, column=3, padx=2)
+
+        ttk.Label(date_frame, text="Año:").grid(row=0, column=4, padx=2)
+        year_entry = ttk.Spinbox(date_frame, from_=2000, to=2100, width=5)
+        year_entry.grid(row=0, column=5, padx=2)
+
+        # Parsear fecha actual si existe
+        if fecha_actual != 'Sin fecha':
+            try:
+                dia, mes, año = map(int, fecha_actual.split('/'))
+                day_entry.set(dia)
+                month_entry.set(mes)
+                year_entry.set(año)
+            except:
+                # Si hay error al parsear, usar fecha actual
+                hoy = datetime.now()
+                day_entry.set(hoy.day)
+                month_entry.set(hoy.month)
+                year_entry.set(hoy.year)
+        else:
+            # Si no hay fecha, usar fecha actual
+            hoy = datetime.now()
+            day_entry.set(hoy.day)
+            month_entry.set(hoy.month)
+            year_entry.set(hoy.year)
+
+        result = []
+
+        def on_ok():
+            try:
+                # Construir la fecha desde los componentes
+                dia = int(day_entry.get())
+                mes = int(month_entry.get())
+                año = int(year_entry.get())
+                
+                # Validar la fecha (esto lanzará ValueError si es inválida)
+                datetime.strptime(f"{dia:02d}/{mes:02d}/{año:04d}", "%d/%m/%Y")
+                
+                # Formatear la fecha como DD/MM/AAAA
+                fecha_formateada = f"{dia:02d}/{mes:02d}/{año:04d}"
+                result.append(fecha_formateada)
+                dialog.destroy()
+            except ValueError as e:
+                self._show_error(f"Fecha inválida: {str(e)}", dialog)
+
+        btn_frame = ttk.Frame(dialog)
+        btn_frame.pack(pady=10)
         
-        if nueva_fecha and nueva_fecha != fecha_actual:
-            #actualizar fecha
-            lote_data['_info']['fecha_alojamiento'] = nueva_fecha
-            self._save_and_refresh()
+        ttk.Button(btn_frame, text="Aceptar", command=on_ok).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="Cancelar", command=dialog.destroy).pack(side=tk.LEFT, padx=5)
+
+        dialog.bind("<Return>", lambda e: on_ok())
+        dialog.wait_window()
+
+        if result:
+            # Actualizar fecha solo si se ingresó una válida
+            nueva_fecha = result[0]
+            if nueva_fecha != fecha_actual:
+                lote_data['_info']['fecha_alojamiento'] = nueva_fecha
+                self._save_and_refresh()
         
 
     def add_caseta(self):
@@ -590,21 +717,47 @@ class EditTab:
             self._save_and_refresh()
         except KeyError as e:
             self._show_error(f"No se pudo eliminar el elemento: {str(e)}")
+        except Exception as e:
+            self._show_error(f"Error inesperado: {str(e)}")
             
-            # Acceso corregido:
-            del self.data_manager.modules[module][lote]['casetas'][caseta_name]
+    def _validate_structure(self, module_name, lote_name=None, caseta_name=None):
+        """Valida que exista la estructura completa"""
+        if module_name not in self.data_manager.modules:
+            return False
+        if lote_name and lote_name not in self.data_manager.modules[module_name]:
+            return False
+        if (caseta_name and lote_name and 
+            'casetas' in self.data_manager.modules[module_name][lote_name] and 
+            caseta_name in self.data_manager.modules[module_name][lote_name]['casetas']):
+            return True
+        return not caseta_name and not lote_name
 
     def _delete_item_from_structure(self, item_id, tags, item_text):
         """Elimina un elemento de la estructura de datos según su tipo"""
-        if "module" in tags:
-            del self.data_manager.modules[item_text]
-        elif "lote" in tags:
-            module = self.tree.item(self.tree.parent(item_id), "text")
-            del self.data_manager.modules[module][item_text]
-        elif "caseta" in tags:
-            lote = self.tree.item(self.tree.parent(item_id), "text")
-            module = self.tree.item(self.tree.parent(self.tree.parent(item_id)), "text")
-            del self.data_manager.modules[module][lote][item_text]
+        try:
+            if "module" in tags:
+                del self.data_manager.modules[item_text]
+            elif "lote" in tags:
+                module = self.tree.item(self.tree.parent(item_id), "text")
+                del self.data_manager.modules[module][item_text]
+            elif "caseta" in tags:
+                lote_item = self.tree.parent(item_id)
+                module_item = self.tree.parent(lote_item)
+                
+                module_name = self.tree.item(module_item, "text")
+                lote_name = self.tree.item(lote_item, "text")
+                
+                # Acceso seguro a las casetas
+                if (module_name in self.data_manager.modules and 
+                    lote_name in self.data_manager.modules[module_name] and 
+                    'casetas' in self.data_manager.modules[module_name][lote_name] and 
+                    item_text in self.data_manager.modules[module_name][lote_name]['casetas']):
+                    
+                    del self.data_manager.modules[module_name][lote_name]['casetas'][item_text]
+                else:
+                    raise KeyError(f"No se encontró la caseta '{item_text}'")
+        except KeyError as e:
+            raise KeyError(f"Error al eliminar: {str(e)}") from e
 
     def edit_item(self):
         """Permite editar directamente los nombres en el Treeview"""
@@ -670,34 +823,42 @@ class EditTab:
 
         self.edit_entry.bind("<Return>", save_edit)
         self.edit_entry.bind("<FocusOut>", save_edit)
-        self.edit_entry.bind("<Escape>", cancel_1edit)
+        self.edit_entry.bind("<Escape>", cancel_edit)
 
     def _update_item_name_in_structure(self, tags, old_name, new_name):
         """Actualiza el nombre de un elemento en la estructura de datos"""
         if "module" in tags:
             if new_name in self.data_manager.modules:
                 raise ValueError("Ya existe un módulo con ese nombre")
-            self.data_manager.modules[new_name] = self.data_manager.modules.pop(
-                old_name
-            )
+            self.data_manager.modules[new_name] = self.data_manager.modules.pop(old_name)
         elif "lote" in tags:
             parent = self.tree.focus()
             module_name = self.tree.item(self.tree.parent(parent), "text")
             if new_name in self.data_manager.modules[module_name]:
                 raise ValueError("Ya existe un lote con ese nombre")
             self.data_manager.modules[module_name][new_name] = (
-                self.data_manager.modules[module_name].pop(old_name)
-            )
+                self.data_manager.modules[module_name].pop(old_name))
         elif "caseta" in tags:
             parent = self.tree.focus()
             grandparent = self.tree.parent(parent)
             module_name = self.tree.item(self.tree.parent(grandparent), "text")
             lote_name = self.tree.item(grandparent, "text")
-            if new_name in self.data_manager.modules[module_name][lote_name]:
+            
+            # Acceso CORREGIDO a las casetas
+            casetas = self.data_manager.modules[module_name][lote_name].get('casetas', {})
+            
+            if new_name in casetas:
                 raise ValueError("Ya existe una caseta con ese nombre")
-            self.data_manager.modules[module_name][lote_name][new_name] = (
-                self.data_manager.modules[module_name][lote_name].pop(old_name)
-            )
+            
+            # Mover la caseta al nuevo nombre
+            if old_name in casetas:
+                casetas[new_name] = casetas.pop(old_name)
+                self.data_manager.save_data()
+                
+    def print_structure(self):
+        import pprint
+        pp = pprint.PrettyPrinter(indent=4)
+        pp.pprint(self.data_manager.modules)
 
     def _open_caseta_management(self, item_id):
         """Abre la ventana de gestión de corrales para una caseta"""
@@ -723,22 +884,152 @@ class EditTab:
             self._show_error(f"Error al acceder a los datos: {str(e)}")
 
     def _setup_corrales_tree_bindings(self, tree):
-        """Configura los eventos para selección por celdas"""
-        tree.bind("<Button-1>", lambda e: self._handle_corrales_click(e, tree))
+        """Configuración robusta para selección múltiple"""
+        # Deshabilitar bindings por defecto que interfieren
+        tree.unbind('<Button-1>')
+        tree.unbind('<B1-Motion>')
         
-    def _highlight_hovered_row(self, event, tree):
-        """Resalta la fila sobre la que está el cursor"""
+        # Nuestros bindings personalizados
+        tree.bind('<Button-1>', lambda e: self._handle_tree_click(e, tree))
+        tree.bind('<Control-Button-1>', lambda e: self._handle_ctrl_click(e, tree), add='+')
+        tree.bind('<Shift-Button-1>', lambda e: self._handle_shift_click(e, tree), add='+')
+        
+        # Variables de estado
+        self._last_single_click_item = None
+        self._last_click_time = 0
+        
+    def _handle_tree_click(self, event, tree):
+        """Maneja clicks normales (sin modificadores)"""
         item = tree.identify_row(event.y)
-        if item:
-            tree.tk.call(tree, "tag", "remove", "hover")
-            tree.tk.call(tree, "tag", "add", "hover", item)
-            tree.tk.call(tree, "tag", "configure", "hover", background="#e6e6e6")
+        if not item:
+            return
+        
+        current_time = time.time()
+        
+        # Manejar doble click
+        if current_time - self._last_click_time < 0.3 and item == self._last_single_click_item:
+            self._last_click_time = 0
+            self.edit_corral(*self._get_corral_context(tree), tree)
+            return
+        
+    def _get_corral_context(self, tree):
+        """Obtiene el contexto (módulo, lote, caseta) para el corral seleccionado"""
+        # Implementación según tu estructura de datos
+        # Debe devolver (module_name, lote_name, caseta_name)
+        pass
+        
+        # Click simple
+        tree.selection_set(item)
+        tree.focus(item)
+        self._last_single_click_item = item
+        self._last_click_time = current_time
 
+    def _on_treeview_click(self, event, tree):
+        """Maneja el click inicial en el Treeview"""
+        item = tree.identify_row(event.y)
+        if not item:
+            return
+        
+        self._drag_start = (event.x, event.y)
+        
+        # Manejo de teclas modificadoras
+        if event.state & 0x0004:  # Control presionado
+            current_selection = list(tree.selection())
+            if item in current_selection:
+                current_selection.remove(item)
+            else:
+                current_selection.append(item)
+            tree.selection_set(current_selection)
+        elif event.state & 0x0001:  # Shift presionado
+            if self._last_clicked_item:
+                all_items = tree.get_children()
+                try:
+                    start = all_items.index(self._last_clicked_item)
+                    end = all_items.index(item)
+                    tree.selection_set(all_items[min(start, end):max(start, end)+1])
+                except ValueError:
+                    tree.selection_set(item)
+            else:
+                tree.selection_set(item)
+        else:  # Click normal
+            tree.selection_set(item)
+        
+        self._last_clicked_item = item
+        tree.focus(item)
+
+
+    def _on_treeview_drag(self, event, tree):
+        """Maneja el arrastre del mouse para selección por arrastre"""
+        if not self._drag_start:
+            return
+        
+        # Solo activar selección por arrastre si no hay teclas modificadoras
+        if not (event.state & 0x0001 or event.state & 0x0004):
+            x, y = self._drag_start
+            if abs(event.x - x) > 5 or abs(event.y - y) > 5:  # Umbral mínimo de arrastre
+                # Implementar selección por arrastre si es necesario
+                pass
+            
+    def _on_treeview_release(self, event, tree):
+        """Maneja la liberación del click"""
+        self._drag_start = None
+
+    def _handle_hover_motion(self, event, tree):
+        """Maneja el movimiento del mouse sobre el Treeview"""
+        # Solo resaltamos si no hay teclas modificadoras presionadas
+        if not event.state & (0x0001 | 0x0004):  # Sin Shift o Ctrl presionados
+            self._highlight_hovered_row(event, tree)
+        
     def _handle_corrales_click(self, event, tree):
-        """Maneja los clicks en el Treeview de corrales"""
+        """Maneja clicks normales en el Treeview"""
         item = tree.identify_row(event.y)
         if item:
-            tree.selection_set(item)  # Selecciona el item clickeado
+            tree.selection_set(item)
+            tree.focus(item)
+            
+    def _highlight_hovered_row(self, event, tree):
+        """Resalta la fila sobre la que está el cursor del mouse"""
+        item = tree.identify_row(event.y)
+        
+        # Primero quitamos el resaltado de todas las filas
+        for i in tree.get_children():
+            tree.tag_configure(i, background='')
+        
+        # Si hay un item bajo el cursor, lo resaltamos
+        if item:
+            tree.tag_configure(item, background='#f0f0f0')  # Color gris claro para hover
+
+
+    def _handle_shift_click(self, event, tree):
+        """Maneja selección por rango con Shift (original)"""
+        item = tree.identify_row(event.y)
+        if item:
+            selected = tree.selection()
+            if selected:
+                first = selected[0]
+                all_items = tree.get_children()
+                start = all_items.index(first)
+                end = all_items.index(item)
+                tree.selection_set(all_items[min(start, end):max(start, end)+1])
+            else:
+                tree.selection_set(item)
+
+    def _handle_ctrl_click(self, event, tree):
+        """Maneja selección con Ctrl presionado"""
+        item = tree.identify_row(event.y)
+        if not item:
+            return
+        
+        current_selection = list(tree.selection())
+        
+        if item in current_selection:
+            current_selection.remove(item)
+        else:
+            current_selection.append(item)
+        
+        tree.selection_set(current_selection)
+        tree.focus(item)
+        return 'break'  # Importante para evitar conflicto con otros bindings
 
     # ------------------------- Gestión de Corrales -------------------------
     def manage_caseta(self, module_name, lote_name, caseta_name, corrales):
@@ -764,7 +1055,8 @@ class EditTab:
 
         # Centrar la ventana
         self._center_window(caseta_window, window_width, window_height)
-
+        self.main_tree = self.tree
+        
         # Frame principal
         main_frame = ttk.Frame(caseta_window, padding=10)
         main_frame.pack(fill=tk.BOTH, expand=True)
@@ -782,7 +1074,8 @@ class EditTab:
             tree_frame,
             columns=("corral", "hembras", "machos", "total"),
             show="headings",
-            selectmode="none",  # Permite selección múltiple
+            selectmode="extended",  # Permite selección múltiple
+            style="Custom.Treeview"  # Usar un estilo personalizado
         )
 
         # Añadir esta configuración adicional:
@@ -928,10 +1221,11 @@ class EditTab:
             next_num += 1
         
         self.data_manager.save_data()
+        self._refresh_main_tree(module_name, lote_name, caseta_name)
 
     def delete_corrales(self, module_name, lote_name, caseta_name, tree):
-        """Elimina los corrales seleccionados"""
-        selected_items = tree.selection()  # Obtener todos los items seleccionados
+        """Elimina los corrales seleccionados de forma masiva"""
+        selected_items = tree.selection()  # Obtiene todos los items seleccionados
         
         if not selected_items:
             self._show_warning("Seleccione al menos un corral haciendo clic en él")
@@ -973,10 +1267,27 @@ class EditTab:
                 tree.delete(item)
 
             self.data_manager.save_data()
+            self._refresh_main_tree(module_name, lote_name, caseta_name)
             self._show_success(f"{len(corrales_a_eliminar)} corral(es) eliminados correctamente")
 
         except Exception as e:
             self._show_error(f"Error al eliminar corrales: {str(e)}")
+            
+    def _configure_corrales_tree_columns(self, tree):
+        """Configura las columnas del Treeview de corrales"""
+        columns = {
+            "corral": {"text": "Corral", "width": 150, "anchor": "center"},
+            "hembras": {"text": "Hembras", "width": 100, "anchor": "center"},
+            "machos": {"text": "Machos", "width": 100, "anchor": "center"},
+            "total": {"text": "Total", "width": 100, "anchor": "center"},
+        }
+
+        for col, params in columns.items():
+            tree.heading(col, text=params["text"])
+            tree.column(col, width=params["width"], anchor=params["anchor"])
+        
+        # Configurar estilo para selección múltiple
+        tree.tag_configure('selected', background='#3498db', foreground='white')
             
     def _show_success(self, message):
         """Muestra un mensaje de éxito"""
@@ -1045,6 +1356,7 @@ class EditTab:
                         ))
                         
                         self.data_manager.save_data()
+                        self._refresh_main_tree(module_name, lote_name, caseta_name)
                         break
                 
                 entry.destroy()
@@ -1165,12 +1477,11 @@ class EditTab:
         return selected
 
     def _get_user_input(self, title, prompt, number=False, default=""):
-        """Muestra un diálogo para obtener entrada del usuario"""
-        dialog = tk.Toplevel(self.frame)
+        """Muestra un diálogo para obtener entrada del usuario (versión corregida)"""
+        dialog = tk.Toplevel(self.frame)  # Cambiamos el nombre a 'dialog' para consistencia
         dialog.title(title)
         dialog.transient(self.frame)
         dialog.grab_set()
-
         self._center_window(dialog, 400, 150)
 
         ttk.Label(dialog, text=prompt).pack(padx=10, pady=5)
@@ -1187,26 +1498,49 @@ class EditTab:
                 if number and val < 0:
                     raise ValueError
                 result.append(val)
-                dialog.grab_release()
                 dialog.destroy()
             except ValueError:
-                msg = (
-                    "Ingrese un número válido" if number else "Ingrese un valor válido"
-                )
+                msg = "Ingrese un número válido" if number else "Ingrese un valor válido"
                 self._show_error(msg, dialog)
                 entry.focus_set()
 
-        ttk.Button(dialog, text="Aceptar", command=on_ok).pack(pady=5)
-        dialog.bind("<Return>", lambda e: on_ok())
+        btn_frame = ttk.Frame(dialog)
+        btn_frame.pack(pady=10)
+        
+        ttk.Button(btn_frame, text="Aceptar", command=on_ok).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="Cancelar", command=dialog.destroy).pack(side=tk.LEFT, padx=5)
 
+        dialog.bind("<Return>", lambda e: on_ok())
+        
         def on_close():
             dialog.grab_release()
             dialog.destroy()
-
+        
         dialog.protocol("WM_DELETE_WINDOW", on_close)
         dialog.wait_window()
 
         return result[0] if result else None
+    
+    def _refresh_main_tree(self, module_name, lote_name, caseta_name):
+        """Actualiza la vista principal después de cambios en corrales"""
+        # Obtener el número actualizado de corrales
+        num_corrales = len(self.data_manager.modules[module_name][lote_name]['casetas'][caseta_name])
+        
+        # Buscar el ítem de la caseta en el árbol principal
+        for module_id in self.main_tree.get_children():
+            if self.main_tree.item(module_id, "text") == module_name:
+                for lote_id in self.main_tree.get_children(module_id):
+                    if self.main_tree.item(lote_id, "text") == lote_name:
+                        for caseta_id in self.main_tree.get_children(lote_id):
+                            if self.main_tree.item(caseta_id, "text") == caseta_name:
+                                # Actualizar el texto de detalles
+                                self.main_tree.item(caseta_id, values=(
+                                    "Caseta", 
+                                    f"{num_corrales} corrales"
+                                ))
+                                break
+                        break
+                break
 
     def _confirm_action(self, message):
         """Muestra un diálogo de confirmación y devuelve la respuesta"""

@@ -1,38 +1,965 @@
 {
     "1": {
         "F611": {
-            "_info": {
-                "fecha_alojamiento": "05/04/2025",
-                "fecha_creacion": "08/04/2025"
-            },
             "casetas": {
-                "A": [
+                "3": [
                     {
                         "nombre": "1",
-                        "hembras": 5,
-                        "machos": 5
+                        "hembras": 50,
+                        "machos": 50,
+                        "huevos_nido": 0,
+                        "huevos_piso": 0
                     },
                     {
                         "nombre": "2",
-                        "hembras": 5,
-                        "machos": 5
+                        "hembras": 50,
+                        "machos": 50,
+                        "huevos_nido": 0,
+                        "huevos_piso": 0
+                    },
+                    {
+                        "nombre": "3",
+                        "hembras": 50,
+                        "machos": 50,
+                        "huevos_nido": 0,
+                        "huevos_piso": 0
+                    },
+                    {
+                        "nombre": "4",
+                        "hembras": 50,
+                        "machos": 50,
+                        "huevos_nido": 0,
+                        "huevos_piso": 0
+                    },
+                    {
+                        "nombre": "5",
+                        "hembras": 50,
+                        "machos": 50,
+                        "huevos_nido": 0,
+                        "huevos_piso": 0
+                    },
+                    {
+                        "nombre": "6",
+                        "hembras": 50,
+                        "machos": 50,
+                        "huevos_nido": 0,
+                        "huevos_piso": 0
+                    }
+                ],
+                "4": [
+                    {
+                        "nombre": "1",
+                        "hembras": 0,
+                        "machos": 0,
+                        "huevos_nido": 0,
+                        "huevos_piso": 0
+                    },
+                    {
+                        "nombre": "2",
+                        "hembras": 0,
+                        "machos": 0,
+                        "huevos_nido": 0,
+                        "huevos_piso": 0
                     },
                     {
                         "nombre": "3",
                         "hembras": 0,
-                        "machos": 5
+                        "machos": 0,
+                        "huevos_nido": 0,
+                        "huevos_piso": 0
                     },
                     {
                         "nombre": "4",
                         "hembras": 0,
-                        "machos": 0
+                        "machos": 0,
+                        "huevos_nido": 0,
+                        "huevos_piso": 0
                     },
                     {
                         "nombre": "5",
                         "hembras": 0,
-                        "machos": 0
+                        "machos": 0,
+                        "huevos_nido": 0,
+                        "huevos_piso": 0
+                    },
+                    {
+                        "nombre": "6",
+                        "hembras": 0,
+                        "machos": 0,
+                        "huevos_nido": 0,
+                        "huevos_piso": 0
+                    },
+                    {
+                        "nombre": "7",
+                        "hembras": 0,
+                        "machos": 0,
+                        "huevos_nido": 0,
+                        "huevos_piso": 0
+                    },
+                    {
+                        "nombre": "8",
+                        "hembras": 0,
+                        "machos": 0,
+                        "huevos_nido": 0,
+                        "huevos_piso": 0
+                    },
+                    {
+                        "nombre": "9",
+                        "hembras": 0,
+                        "machos": 0,
+                        "huevos_nido": 0,
+                        "huevos_piso": 0
+                    },
+                    {
+                        "nombre": "10",
+                        "hembras": 0,
+                        "machos": 0,
+                        "huevos_nido": 0,
+                        "huevos_piso": 0
+                    }
+                ],
+                "5": [
+                    {
+                        "nombre": "1",
+                        "hembras": 0,
+                        "machos": 0,
+                        "huevos_nido": 0,
+                        "huevos_piso": 0
+                    },
+                    {
+                        "nombre": "2",
+                        "hembras": 0,
+                        "machos": 0,
+                        "huevos_nido": 0,
+                        "huevos_piso": 0
+                    },
+                    {
+                        "nombre": "3",
+                        "hembras": 0,
+                        "machos": 0,
+                        "huevos_nido": 0,
+                        "huevos_piso": 0
                     }
                 ]
+            },
+            "produccion": {
+                "20/04/2025": {
+                    "3": [
+                        {
+                            "nombre": "1",
+                            "huevos_nido": 5,
+                            "huevos_piso": 1
+                        },
+                        {
+                            "nombre": "2",
+                            "huevos_nido": 2,
+                            "huevos_piso": 6
+                        },
+                        {
+                            "nombre": "3",
+                            "huevos_nido": 4,
+                            "huevos_piso": 5
+                        },
+                        {
+                            "nombre": "4",
+                            "huevos_nido": 6,
+                            "huevos_piso": 5
+                        },
+                        {
+                            "nombre": "5",
+                            "huevos_nido": 8,
+                            "huevos_piso": 7
+                        },
+                        {
+                            "nombre": "6",
+                            "huevos_nido": 65,
+                            "huevos_piso": 2
+                        }
+                    ],
+                    "4": [
+                        {
+                            "nombre": "1",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "2",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "3",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "4",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "5",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "6",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "7",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "8",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "9",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "10",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        }
+                    ]
+                },
+                "21/04/2025": {
+                    "3": [
+                        {
+                            "nombre": "1",
+                            "huevos_nido": 5,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "2",
+                            "huevos_nido": 4,
+                            "huevos_piso": 4
+                        },
+                        {
+                            "nombre": "3",
+                            "huevos_nido": 4,
+                            "huevos_piso": 4
+                        },
+                        {
+                            "nombre": "4",
+                            "huevos_nido": 4,
+                            "huevos_piso": 4
+                        },
+                        {
+                            "nombre": "5",
+                            "huevos_nido": 44,
+                            "huevos_piso": 54
+                        },
+                        {
+                            "nombre": "6",
+                            "huevos_nido": 5,
+                            "huevos_piso": 45
+                        }
+                    ],
+                    "4": [
+                        {
+                            "nombre": "1",
+                            "huevos_nido": 45,
+                            "huevos_piso": 45
+                        },
+                        {
+                            "nombre": "2",
+                            "huevos_nido": 45,
+                            "huevos_piso": 45
+                        },
+                        {
+                            "nombre": "3",
+                            "huevos_nido": 45,
+                            "huevos_piso": 45
+                        },
+                        {
+                            "nombre": "4",
+                            "huevos_nido": 475,
+                            "huevos_piso": 4
+                        },
+                        {
+                            "nombre": "5",
+                            "huevos_nido": 5,
+                            "huevos_piso": 45
+                        },
+                        {
+                            "nombre": "6",
+                            "huevos_nido": 45,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "7",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "8",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "9",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "10",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        }
+                    ],
+                    "5": [
+                        {
+                            "nombre": "1",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "2",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "3",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "4",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "5",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        }
+                    ]
+                },
+                "28/04/2025": {
+                    "3": [
+                        {
+                            "nombre": "1",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "2",
+                            "huevos_nido": 1,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "3",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "4",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "5",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "6",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        }
+                    ],
+                    "4": [
+                        {
+                            "nombre": "1",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "2",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "3",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "4",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "5",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "6",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "7",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "8",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "9",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "10",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        }
+                    ],
+                    "5": [
+                        {
+                            "nombre": "1",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "2",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "3",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        }
+                    ]
+                },
+                "29/04/2025": {
+                    "3": [
+                        {
+                            "nombre": "1",
+                            "huevos_nido": 5,
+                            "huevos_piso": 6
+                        },
+                        {
+                            "nombre": "2",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "3",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "4",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "5",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "6",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        }
+                    ],
+                    "4": [
+                        {
+                            "nombre": "1",
+                            "huevos_nido": 5,
+                            "huevos_piso": 6
+                        },
+                        {
+                            "nombre": "2",
+                            "huevos_nido": 7,
+                            "huevos_piso": 8
+                        },
+                        {
+                            "nombre": "3",
+                            "huevos_nido": 4,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "4",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "5",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "6",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "7",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "8",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "9",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "10",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        }
+                    ],
+                    "5": [
+                        {
+                            "nombre": "1",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "2",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "3",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        }
+                    ]
+                },
+                "27/04/2025": {
+                    "3": [
+                        {
+                            "nombre": "1",
+                            "huevos_nido": 8,
+                            "huevos_piso": 8
+                        },
+                        {
+                            "nombre": "2",
+                            "huevos_nido": 8,
+                            "huevos_piso": 8
+                        },
+                        {
+                            "nombre": "3",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "4",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "5",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "6",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        }
+                    ],
+                    "4": [
+                        {
+                            "nombre": "1",
+                            "huevos_nido": 8,
+                            "huevos_piso": 8
+                        },
+                        {
+                            "nombre": "2",
+                            "huevos_nido": 8,
+                            "huevos_piso": 8
+                        },
+                        {
+                            "nombre": "3",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "4",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "5",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "6",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "7",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "8",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "9",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "10",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        }
+                    ],
+                    "5": [
+                        {
+                            "nombre": "1",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "2",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "3",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        }
+                    ]
+                },
+                "25/04/2025": {
+                    "3": [
+                        {
+                            "nombre": "1",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "2",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "3",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "4",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "5",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "6",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        }
+                    ],
+                    "4": [
+                        {
+                            "nombre": "1",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "2",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "3",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "4",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "5",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "6",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "7",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "8",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "9",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "10",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        }
+                    ],
+                    "5": [
+                        {
+                            "nombre": "1",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "2",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "3",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        }
+                    ]
+                },
+                "14/04/2025": {
+                    "3": [
+                        {
+                            "nombre": "1",
+                            "huevos_nido": 1,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "2",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "3",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "4",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "5",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "6",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        }
+                    ],
+                    "4": [
+                        {
+                            "nombre": "1",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "2",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "3",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "4",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "5",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "6",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "7",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "8",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "9",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "10",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        }
+                    ],
+                    "5": [
+                        {
+                            "nombre": "1",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "2",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "3",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "2": {
+        "F613": {
+            "casetas": {
+                "B": [
+                    {
+                        "nombre": "1",
+                        "hembras": 0,
+                        "machos": 0,
+                        "huevos_nido": 0,
+                        "huevos_piso": 0
+                    },
+                    {
+                        "nombre": "2",
+                        "hembras": 0,
+                        "machos": 0,
+                        "huevos_nido": 0,
+                        "huevos_piso": 0
+                    },
+                    {
+                        "nombre": "3",
+                        "hembras": 0,
+                        "machos": 0,
+                        "huevos_nido": 0,
+                        "huevos_piso": 0
+                    },
+                    {
+                        "nombre": "4",
+                        "hembras": 0,
+                        "machos": 0,
+                        "huevos_nido": 0,
+                        "huevos_piso": 0
+                    },
+                    {
+                        "nombre": "5",
+                        "hembras": 0,
+                        "machos": 0,
+                        "huevos_nido": 0,
+                        "huevos_piso": 0
+                    }
+                ]
+            },
+            "produccion": {
+                "20/04/2025": {
+                    "B": [
+                        {
+                            "nombre": "1",
+                            "huevos_nido": 0,
+                            "huevos_piso": 50
+                        },
+                        {
+                            "nombre": "2",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "3",
+                            "huevos_nido": 0,
+                            "huevos_piso": 5
+                        },
+                        {
+                            "nombre": "4",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "5",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        }
+                    ]
+                },
+                "27/04/2025": {
+                    "B": [
+                        {
+                            "nombre": "1",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "2",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "3",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "4",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        },
+                        {
+                            "nombre": "5",
+                            "huevos_nido": 0,
+                            "huevos_piso": 0
+                        }
+                    ]
+                }
             }
         }
     }
